@@ -54,10 +54,13 @@
                                                      options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)
                                                      context:nil];
     
-    stringRect.size.height = stringRect.size.height < 30 ? stringRect.size.height = 20 : stringRect.size.height;
-    stringRect.size.width = stringRect.size.width < 25 ? 25 : stringRect.size.width;
-    
-    return CGSizeMake(stringRect.size.width, stringRect.size.height+2);
+    UILabel *label = [[UILabel alloc] init];
+    label.numberOfLines = 0;
+    label.attributedText = attributedText;
+    CGSize newSize = [label sizeThatFits:CGSizeMake(size.width, size.height)];
+    stringRect.size.height = newSize.height < 30 ? newSize.height = 20 : newSize.height;
+    stringRect.size.width = newSize.width < 25 ? 25 : newSize.width;
+    return CGSizeMake (stringRect.size.width, stringRect.size.height+2);
 }
 
 + (CGFloat)getHeightForAttributedText:(NSAttributedString *)attributedText textWidth:(CGFloat)textWidth {
